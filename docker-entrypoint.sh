@@ -1,5 +1,18 @@
 #!/bin/sh
-chown -R postgres "$PGDATA"
+# Add local user
+# Either use the LOCAL_USER_ID if passed in at runtime or
+# fallback
+
+USER_ID=${LOCAL_USER_ID:-9001}
+
+echo "Starting with UID : $USER_ID"
+
+deluser postgres
+delgroup postgres
+addgroup -g $USER_ID postgres && adduser -D -G postgres -s /bin/sh -u $USER_ID postgres
+export HOME=/var/lib/postgresql
+
+chown -R postgres:postgres "$PGDATA"
 
 if [ -z "$(ls -A "$PGDATA")" ]; then
     gosu postgres initdb

@@ -6,7 +6,7 @@
 
 Start PostgreSQL server with database 'dbname' a database user 'auser' protected by 'secretpwd', listening on port 5432 running this command:
     
-    docker run -p 5432:5432 --name appname-postgres -e POSTGRES_USER=auser POSTGRES_PASSWORD=secretpwd -e POSTGRES_DB=dbname -d alpine-postgresql
+    docker run -p 5432:5432 --name appname-postgres -e POSTGRES_USER=auser -e POSTGRES_PASSWORD=secretpwd -e POSTGRES_DB=dbname -d alpine-postgresql
 
 Link to other container to the PostgreSQL container you just created
 
@@ -22,11 +22,15 @@ build:
 
 debug:
 
-	docker run -i -t --entrypoint=sh alpine-postgresql
+	docker run -i -t --entrypoint=sh -e LOCAL_USER_ID=`id -u $USER` alpine-postgresql
 
 run:
 
-    docker run -p 5432:5432 --name postgresql_instance -e POSTGRES_PASSWORD=secretpwd -i -P alpine-postgresql
+    docker run -p 5432:5432 --name postgresql_instance -e LOCAL_USER_ID=`id -u $USER` -e POSTGRES_USER=auser -e POSTGRES_PASSWORD=secretpwd -e POSTGRES_DB=dbname -i -P alpine-postgresql
+
+connect:
+
+    docker exec -it postgresql_instance sh
 
 # License
 
