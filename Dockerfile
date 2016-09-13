@@ -1,7 +1,7 @@
 FROM alpine:3.4
 
 RUN echo "@stable http://nl.alpinelinux.org/alpine/v3.4/main" >> /etc/apk/repositories && \
-    apk update && apk add curl "postgresql@stable=9.5.3-r1" "postgresql-contrib@stable=9.5.3-r1" && \
+    apk update && apk add curl "postgresql@stable=9.5.4-r0" "postgresql-contrib@stable=9.5.4-r0" && \
     mkdir /docker-entrypoint-initdb.d && \
     curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" && \
     chmod +x /usr/local/bin/gosu && \
