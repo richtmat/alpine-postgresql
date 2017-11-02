@@ -22,7 +22,7 @@ RUN set -x \
 
 RUN echo "@stable http://nl.alpinelinux.org/alpine/v3.4/main" >> /etc/apk/repositories \
     && apk update \
-    && apk add "postgresql@stable=9.5.6-r0" "postgresql-contrib@stable=9.5.6-r0" \
+    && apk add "postgresql@stable=9.5.8-r0" "postgresql-contrib@stable=9.5.8-r0" \
     && mkdir /docker-entrypoint-initdb.d \
     && rm -rf /var/cache/apk/*
 
